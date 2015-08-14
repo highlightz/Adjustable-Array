@@ -13,7 +13,7 @@ public:
 	AdjustableArray( int size );
 	inline DataType& operator [ ]( int index );
 	void changeSize( int newSize );  // Will not alter values unless newSize is smaller than current capacity;
-														       // in this case, the values from 0 to newSize - 1 will not be altered.
+                                         // in this case, the values from 0 to newSize - 1 will not be altered.
 	inline int length( ) const;  // Returns the current capacity of the array
 	
 	string err( ) const;  // Returns error message from errorCode.
