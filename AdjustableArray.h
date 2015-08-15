@@ -13,6 +13,7 @@ public:
 	AdjustableArray( int size );
 	AdjustableArray( const AdjustableArray< DataType >& ap );
 	~AdjustableArray( );
+	AdjustableArray< DataType >& operator =( const AdjustableArray< DataType >& right );
 	inline DataType& operator [ ]( int index );
 	void changeSize( int newSize );  // Will not alter values unless newSize is smaller than current capacity;
                                          // in this case, the values from 0 to newSize - 1 will not be altered.
@@ -146,4 +147,15 @@ inline void AdjustableArray< DataType >::deepCopy( const AdjustableArray< DataTy
 	{
 		elements[ i ] = original.elements[ i ];
 	}
+}
+
+template < class DataType >
+AdjustableArray< DataType >&  AdjustableArray< DataType >::operator =( const AdjustableArray< DataType >& right )
+{
+	if ( this == &right )
+		return *this;
+	delete [ ] elements;
+	deepCopy( right );
+
+	return  *this;
 }
