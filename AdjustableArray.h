@@ -11,6 +11,8 @@ class AdjustableArray
 {
 public:
 	AdjustableArray( int size );
+	AdjustableArray( const AdjustableArray< DataType >& ap );
+	~AdjustableArray( );
 	inline DataType& operator [ ]( int index );
 	void changeSize( int newSize );  // Will not alter values unless newSize is smaller than current capacity;
                                          // in this case, the values from 0 to newSize - 1 will not be altered.
@@ -23,6 +25,7 @@ private:
 	int capacity;
 	DataType dud;  // Returned from operator [ ] if index error occurs
 	int errorCode;  // Contains code for error if array misuse occurs
+	inline void deepCopy( const AdjustableArray< DataType >& original );
 };
 
 // Implementation of  AdjustableArray 
@@ -46,6 +49,18 @@ AdjustableArray< DataType >::AdjustableArray( int size )
 		errorCode = 0;  // No error
 	}
 	elements = new DataType [capacity];
+}
+
+template < class DataType >
+AdjustableArray< DataType >::AdjustableArray( const AdjustableArray< DataType >& ap )
+{
+	deepCopy( ap );
+}
+
+template < class DataType >
+AdjustableArray< DataType >::~AdjustableArray( )
+{
+	delete [ ] elements;
 }
 
 template < class DataType >
@@ -117,4 +132,18 @@ string AdjustableArray< DataType >::err( ) const
 	}
 
 	return errMsg;
+}
+
+template < class DataType >
+inline void AdjustableArray< DataType >::deepCopy( const AdjustableArray< DataType >& original )
+{
+	// Note: private members of input object original are accessible.
+	capacity = original.capacity;
+	errorCode = original.errorCode;
+	elements = new DataType [ capacity ];
+
+	for ( int i = 0; i < capacity; i++ )
+	{
+		elements[ i ] = original.elements[ i ];
+	}
 }
