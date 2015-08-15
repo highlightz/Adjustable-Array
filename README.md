@@ -2,6 +2,7 @@
 Customized Adjustable Array class template.
 
 Note:
+
 1. It is the class template user's responsibility to decide when and where to deploy changeSize method to change the capacity 
    of the array.
 
